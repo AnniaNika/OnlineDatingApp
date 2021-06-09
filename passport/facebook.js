@@ -16,8 +16,8 @@ passport.deserializeUser((id,done) => {
 passport.use(new FacebookStrategy({
     clientID: keys.FacebookAppId,
     clientSecret:keys.FacebookAppSecret,
-    //callbackURL: 'http://localhost:3000/auth/facebook/callback',
-    callbackURL: 'https://guarded-gorge-36291.herokuapp.com/auth/facebook/callback',
+    callbackURL: 'http://localhost:3000/auth/facebook/callback',
+    //callbackURL: 'https://guarded-gorge-36291.herokuapp.com/auth/facebook/callback',
     profileFields: ['email','name','displayName','photos']
 },(accessToken, refreshToken, profile, done) => {
     console.log(profile);
