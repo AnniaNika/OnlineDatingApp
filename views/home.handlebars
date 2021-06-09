@@ -1,1 +1,40 @@
 <h1>Welcome to Online Dating</h1>
+{{#if user}}
+<p>You are logged in...</p>
+{{else}}
+<div class="row">
+    <div class="col-sm-4">
+        <h1 class="center">
+            <a href="/auth/facebook">
+                <button type="button" class="btn btn-primary btn-lg">Login With Facebook</button>
+            </a>
+        </h1>
+        <h1 class="center">
+            <a href="/auth/google">
+                <button type="button" class="btn btn-danger btn-lg">Login With Google</button>
+            </a>
+        </h1>
+        <p class="center">or</p>
+
+        <form action="/login" method="POST">
+        {{#each success}}
+        <p class="green">{{text}}</p>
+        {{/each}}
+        {{#each errors}}
+        <p class="red">{{text}}</p>
+        {{/each}}
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" name="email" id="email" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary m">Login</button>
+        </form>
+        <a href="/newAccount" class="m">Need Account?</a>
+    </div>
+</div>
+
+{{/if}}

@@ -1,0 +1,16 @@
+.center {
+    text-align: center;
+}
+
+.form-group,
+.m {
+    margin: 10px;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}

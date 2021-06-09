@@ -1,15 +1,15 @@
-<form>
+<form action="/contactUs" method="POST">
   <div class="mb-3">
     <label for="fullname">Full Name</label>
-    <input type="text" class="form-control" id="fullname" placeholder="Enter Full Name">
+    <input type="text" name="fullname" class="form-control" id="fullname" placeholder="Enter Full Name">
   </div>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+    <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
   </div>
   <div class="mb-3">
     <label for="message" class="form-label">Message</label>
-    <input type="text" class="form-control" id="message" placeholder="Type message..">
+    <input type="text" name="message" class="form-control" id="message" placeholder="Type message..">
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
