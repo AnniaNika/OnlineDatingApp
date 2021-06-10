@@ -1,6 +1,6 @@
 <div class="container">
     <h1 id="spinner" style="display: none;">
-        Please wait..
+        <i class="fa fa-spinner"> Please wait ..</i>
     </h1>
     <form action="/uploadAvatar" method="POST" id="uploadForm">
         <div class="form-group">
@@ -19,6 +19,6 @@
         document.getElementById('spinner').style.display = 'block';
         setTimeout(function(){
             document.getElementById('uploadForm').submit();
-        },7000)
+        },6000)
     }
 </script>

@@ -14,3 +14,11 @@
 .red {
     color: red;
 }
+
+.fa-edit {
+    cursor: pointer;
+}
+
+#create_acc {
+    text-decoration: none;
+}

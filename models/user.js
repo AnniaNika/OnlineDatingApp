@@ -29,6 +29,16 @@ const userSchema = new Schema({
     country: {
         type: String
     },
+    age: {
+        type: String
+    },
+    gender: {
+        type: String
+    },
+    about: {
+        type: String,
+        default: 'Actively seeking for relationship'
+    },
     online: {
         type: Boolean,
         default: false
