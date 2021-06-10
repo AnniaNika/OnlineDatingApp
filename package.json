@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@handlebars/allow-prototype-access": "^1.0.5",
+    "aws-sdk": "^2.925.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
@@ -19,6 +20,8 @@
     "express-session": "^1.17.2",
     "handlebars": "^4.7.7",
     "mongoose": "^5.12.11",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",

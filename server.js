@@ -190,6 +190,25 @@ app.get('/loginErrors', (req,res) => {
     });
 });
 
+// handle get route
+app.get('/uploadImage',(req,res) => {
+    res.render('uploadImage',{
+        title: 'Upload'
+    });
+});
+app.post('/uploadAvatar',(req,res) => {
+    User.findById({_id:req.user._id}).then((user) => {
+        user.image = req.body.upload;
+        user.save((err) => {
+            if (err) {
+                throw err;
+            }else {
+                res.redirect('/profile');
+            }
+        });
+    });
+});
+
 app.get('/logout',(req,res) => {
     User.findById({_id:req.user._id}).then((user) => {
         user.online = false;
