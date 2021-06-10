@@ -8,5 +8,8 @@ module.exports = {
     //GoogleClientID: '168669449814-ldmdotgllsuo6bugb2tpm4l0sgi71elf.apps.googleusercontent.com',
     GoogleClientID: process.env.GOOGLE_CLIENT_ID,
     //GoogleClientSecret: 'HMFvx_Ry-U4j_By9LGsw4bDa' 
-    GoogleClientSecret: process.env.GOOGLE_CLIENT_SECRET
+    GoogleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    
+    AWSAccessKeyID: process.env.AWS_ACCESS_KEY,
+    AWSAccessKeySecret: process.env.AWS_ACCESS_SECRET
 };
