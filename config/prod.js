@@ -11,5 +11,7 @@ module.exports = {
     GoogleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
     
     AWSAccessKeyID: process.env.AWS_ACCESS_KEY,
-    AWSAccessKeySecret: process.env.AWS_ACCESS_SECRET
+    AWSAccessKeySecret: process.env.AWS_ACCESS_SECRET,
+    StripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+    StripeSecretKey: process.env.STRIPE_SECRET_KEY
 };

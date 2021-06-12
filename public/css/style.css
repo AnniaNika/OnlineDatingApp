@@ -2,6 +2,10 @@
     text-align: center;
 }
 
+.container {
+    padding-top: 20px;
+}
+
 .form-group,
 .m {
     margin: 10px;
@@ -17,8 +21,85 @@
 
 .fa-edit {
     cursor: pointer;
+    color: royalblue;
+    margin-right: 10px ;
 }
 
 #create_acc {
     text-decoration: none;
+}
+
+#register {
+    margin: 30px;
+}
+
+a:visited {
+    margin-right: 10px;
+}
+
+.col-sm-3 {
+    margin: 15px 15px;
+}
+
+.chatroom-users {
+    width: 75px;
+    /* height: 75px; */
+    margin: 10px 5px;
+}
+
+#messages {
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.media {
+    display: flex;
+}
+
+.media-body {
+    margin: auto 10px;
+}
+
+.right {
+    float: right;
+}
+
+.singles-icons {
+    margin-top: 8px;
+}
+
+.col-sm-3 {
+    border: 1px solid black;
+    padding: 5px 5px;
+}
+
+#main-body {
+    margin-top: 80px;
+    margin-bottom: 60px;
+}
+
+.navbar-brand {
+    margin-right: 50px;
+}
+
+#delete-msg {
+    margin-top: 10px;
+    color: rgb(177, 11, 11);
+}
+
+#no-chat {
+    padding-top: 40px;
+}
+
+.fa-spin {
+    margin-top: 50px;
+}
+
+.payment {
+    background-color: rgb(199, 84, 84);
+    color: white;
+    margin: 5px 5px;
+    padding: 10px 10px;
+    border-radius: 30px;
+    border: 2px solid rgb(162, 27, 27);
 }

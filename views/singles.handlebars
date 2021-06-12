@@ -1,0 +1,60 @@
+<div class="container-fluid">
+    <div class="row">
+    {{#each singles}}
+    {{#if online}}
+    
+            <div class="col-sm-3">
+                <img src="{{image}}" width="50%">
+                <br>
+                <h4 class="singles-icons">
+                    <a href="/userProfile/{{_id}}">
+                        <button class="btn btn-outline-primary">
+                            <i class="fa fa-book"></i>
+                        </button>
+                    </a>
+                    <a href="/startChat/{{_id}}">
+                        <button class="btn btn-outline-info">
+                            <i class="fa fa-commenting"></i>
+                        </button>
+                    </a>
+                    <a href="/sendSmile/{{_id}}">
+                        <button class="btn btn-outline-danger">
+                            <i class="fa fa-gratipay"></i>
+                        </button>
+                    </a>
+                    <i class="fa fa-circle green right"> Online</i>
+                </h4>
+                
+            </div>
+    
+    {{else}}
+        
+        <div class="col-sm-3">
+            <img src="{{image}}" width="50%">
+            <br>
+            <h4 class="singles-icons">
+                <a href="/userProfile/{{_id}}">
+                    <button class="btn btn-outline-primary">
+                        <i class="fa fa-address-book"></i>
+                    </button>
+                </a>
+                <a href="/startChat/{{_id}}">
+                    <button class="btn btn-outline-info">
+                        <i class="fa fa-commenting"></i>
+                    </button>
+                </a>
+                <a href="/sendSmile/{{_id}}">
+                    <button class="btn btn-outline-danger">
+                        <i class="fa fa-gratipay"></i>
+                    </button>
+                </a>
+                <i class="fa fa-circle red right"> Offline</i>
+            </h4>
+        </div>
+   
+    {{/if}}
+    {{else}}
+    <p>No user found</p>
+    {{/each}}
+    </div>
+</div>

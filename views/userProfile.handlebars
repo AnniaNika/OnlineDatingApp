@@ -1,0 +1,28 @@
+<div class="card" style="width: 11rem;">
+  <img src="{{oneUser.image}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{oneUser.fullname}}</h5>
+    <a href="/startChat/{{oneUser._id}}" class="btn btn-primary">
+      <i class="fa fa-commenting"></i>
+    </a>
+    {{#if smile}}
+    <a href="/deleteSmile/{{oneUser._id}}" class="btn btn-danger">
+      <i class="fa fa-gratipay newgratipay"></i>
+    </a>
+    <script>
+      $(document).ready(function(){
+        setInterval(function(){
+          $('.newgratipay').attr('style','color:white');
+        },10)
+        setInterval(function(){
+          $('.newgratipay').attr('style','color:red');
+        },30)
+      })
+    </script>
+    {{else}}
+    <a href="/sendSmile/{{oneUser._id}}" class="btn btn-outline-danger">
+      <i class="fa fa-gratipay"></i>
+    </a>
+    {{/if}}
+  </div>
+</div>
