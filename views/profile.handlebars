@@ -43,6 +43,33 @@
     </form>
   </div>
 </div>
+<hr>
+<div class="container">
+  <h2 class="center">My posts</h2>
+  {{#each posts}}
+  <div class="media">
+    <img class="mr-3 rounded-circle" src="{{postUser.image}}" width="74px" height="74px">
+    <div class="media-body">
+      <h5 class="mt-0">{{postUser.fullname}}</h5>
+      <h5 class="mt-0">{{title}}
+        <i class="{{icon}}"></i>
+      </h5>
+      <p>{{body}}</p>
+      <img src="{{image}}" class="img-fluid" width="500px" height="500px">
+      <br>
+      <small>{{getLastMoment date 'hour'}}</small>
+      <br>
+      <p>
+        <a href="/editPost/{{_id}}"><i class="fa fa-pencil post-icons"> Edit</i></a>
+        <a href="/deletePost/{{_id}}"><i class="fa fa-trash post-icons"> Delete</i></a>
+      </p>
+    </div>
+  </div>
+  <hr>
+  {{else}}
+    <p>No posts yet!</p>
+  {{/each}}
+</div>
 
 <script>
   function editProfile(){

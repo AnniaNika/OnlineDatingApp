@@ -1,7 +1,10 @@
-<div class="card" style="width: 11rem;">
+<div class="row">
+  <div class="col-cm-5">
+    <div class="card" style="width: 11rem;">
   <img src="{{oneUser.image}}" class="card-img-top" alt="...">
+
   <div class="card-body">
-    <h5 class="card-title">{{oneUser.fullname}}</h5>
+   
     <a href="/startChat/{{oneUser._id}}" class="btn btn-primary">
       <i class="fa fa-commenting"></i>
     </a>
@@ -25,4 +28,78 @@
     </a>
     {{/if}}
   </div>
+</div>
+  </div>
+  <div class="col-sm-5 profile-info-position">
+    <h3 class="mt-2"><u>Profile info</u></h3>
+    <h5><i class="fa fa-user"></i> {{oneUser.fullname}}</h5>
+    <h5><i class="fa fa-mars"></i> {{oneUser.gender}}</h5>
+    <h5><i class="fa fa-address-book"></i> {{oneUser.about}}</h5>
+    {{#if oneUser.online}}
+    <h4>
+      <i class="fa fa-circle green"> Online</i>
+    </h4>
+    {{else}}
+    <h4>
+      <i class="fa fa-circle red"> Offline</i>
+    </h4>
+    {{/if}}
+  </div>
+</div>
+
+<hr>
+<div class="container">
+  <h2 class="center">Public Posts</h2>
+  {{#each publicPosts}}
+    <div class="media">
+      <img class="mr-3 rounded-circle" src="{{postUser.image}}" width="74px" height="74px">
+    <div class="media-body">
+      <h5 class="mt-0">{{title}}</h5>
+      <p>{{body}}</p>
+      <img src="{{image}}" class="image-fluid" width="60%" height="50%">
+      <br>
+      <small>{{getLastMoment date 'hour'}}</small>
+
+      <h4>
+        <a href="/likePost/{{_id}}"><i class="fa fa-thumbs-up post-icons"> Like</i></a>
+        <a href="/fullPost/{{_id}}"><i class="fa fa-comment post-icons"> Comment</i></a>
+      </h4>
+      
+      {{#if allowComments}}
+      {{#each comments}}
+      <div class="media mt-3">
+        <a class="pr-3" href="/userProfile/{{commentUser._id}}">
+          <img class="rounded-circle" src="{{commentUser.image}}" width="74px" height="74px">
+        </a>
+        <div class="media-body">
+          <p>{{commentBody}}</p>
+          <br>
+          <small>{{getLastMoment date 'hour'}}</small>
+        </div>
+      </div>
+      <hr>
+      {{/each}}
+      {{/if}}
+
+      {{#each likes}}
+      <div class="media mt-3">
+        <a class="pr-3" href="/userProfile/{{likeUser._id}}">
+          <img class="mr-3 rounded-circle" src="{{likeUser.image}}" width="74px" height="74px">
+        </a>
+        <div class="media-body">
+          <h5 class="mt-0"><i class="fa fa-thumbs-up"></i></h5>
+          <br>
+          <small>{{getLastMoment date 'hour'}}</small>
+        </div>
+      </div>
+      <hr>
+      {{/each}}
+
+      //
+
+    </div>
+</div>
+  {{else}}
+  <p>User doesn't have public posts...</p>
+  {{/each}}
 </div>

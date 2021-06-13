@@ -16,6 +16,7 @@ const Message = require('./models/message.js');
 const User = require('./models/user.js');
 const Chat = require('./models/chat.js');
 const Smile = require('./models/smile');
+const Post = require('./models/post.js');
 const app = express();
 // Load keys file
 const Keys = require('./config/keys.js');
@@ -111,6 +112,7 @@ app.get('/auth/google/callback',passport.authenticate('google',{
     failureRedirect: '/'
 }));
 
+// display user profile page
 app.get('/profile',requireLogin,(req,res) => {
     User.findById({_id:req.user._id}).then((user) => {
         if (user) {
@@ -126,12 +128,28 @@ app.get('/profile',requireLogin,(req,res) => {
                             {sender:req.user._id,senderRead:false}
                         ]})
                        .then((unread) => {
-                            res.render('profile', {
-                                title: 'Profile',
-                                user: user,
-                                newSmile:newSmile,
-                                unread:unread
-                            });
+                           Post.find({postUser:req.user._id})
+                           .populate('postUser')
+                           .sort({date: 'desc'})
+                           .then((posts) => {
+                               if (posts) {
+                                    res.render('profile', {
+                                        title: 'Profile',
+                                        user: user,
+                                        newSmile:newSmile,
+                                        unread:unread,
+                                        posts: posts
+                                    });
+                               }else {
+                                   console.log('User doesnt have posts');
+                                    res.render('profile', {
+                                        title: 'Profile',
+                                        user: user,
+                                        newSmile:newSmile,
+                                        unread:unread
+                                    });
+                               }
+                           }) 
                        }) 
                     })
                 }
@@ -286,16 +304,24 @@ app.get('/singles',requireLogin,(req,res) => {
         console.log(err);
     });
 });
-app.get('/userProfile/:id',(req,res) => {
+
+app.get('/userProfile/:id',requireLogin,(req,res) => {
     User.findById({_id:req.params.id})
     .then((user) => {
        Smile.findOne({receiver:req.params.id})
        .then((smile) => {
-            res.render('userProfile', {
-                title: 'Profile',
-                oneUser: user,
-                smile:smile
-            });
+            Post.find({status:'public',postUser:user._id})
+            .populate('postUser')
+            .populate('comments.commentUser')
+            .populate('likes.likeUser')
+            .then((publicPosts) => {
+                res.render('userProfile', {
+                    title: 'Profile',
+                    oneUser: user,
+                    smile:smile,
+                    publicPosts:publicPosts
+                });
+            })
        })
     });
 });
@@ -702,6 +728,166 @@ app.get('/showSmile/:id',requireLogin,(req,res) => {
                     title: 'NewSmile',
                     smile:smile
                 })
+            }
+        })
+    })
+})
+// get method to display post form
+app.get('/displayPostForm',requireLogin,(req,res) => {
+    res.render('post/displayPostForm',{
+        title: 'Post'
+    });
+});
+
+// create post
+app.post('/createPost',requireLogin,(req,res) => {
+    let allowComments = Boolean;
+    if (req.body.allowComments) {
+        allowComments = true;
+    }else{
+        allowComments = false;
+    }
+    const newPost = {
+        title: req.body.title,
+        body: req.body.body,
+        status: req.body.status,
+        image: `https://s3.amazonaws.com/online-dating-site/${req.body.image}`,
+        postUser: req.user._id,
+        allowComments: allowComments,
+        date: new Date
+    }
+    if (req.body.status === 'public') {
+        newPost.icon = 'fa fa-globe';
+    }
+    if (req.body.status === 'private') {
+        newPost.icon = 'fa fa-key';
+    }
+    if (req.body.status === 'friends') {
+        newPost.icon = 'fa fa-group';
+    }
+
+    new Post(newPost).save()
+    .then(() => {
+        if (req.body.status === 'public') {
+            res.redirect('/posts');
+        }else{
+            res.redirect('/profile');
+        }
+    })
+});
+
+//display public posts
+app.get('/posts',requireLogin,(req,res) => {
+    Post.find({status:'public'})
+    .populate('postUser')
+    .sort({date:'desc'})
+    .then((posts) => {
+        res.render('post/posts',{
+            title: 'Posts',
+            posts: posts
+        })
+    })
+})
+
+// delete posts
+app.get('/deletePost/:id',requireLogin,(req,res) => {
+    Post.deleteOne({_id:req.params.id})
+    .then(() => {
+        res.redirect('/profile');
+    })
+})
+// edit posts
+app.get('/editPost/:id',requireLogin,(req,res) => {
+    Post.findById({_id:req.params.id})
+    .then((post) => {
+        res.render('post/editPost',{
+            title: 'Editing',
+            post: post
+        })
+    })
+})
+
+//submit form to update post
+app.post('/editPost/:id',requireLogin,(req,res) => {
+    Post.findByIdAndUpdate({_id:req.params.id})
+    .then((post) => {
+        let allowComments = Boolean;
+        if(req.body.allowComments) {
+            allowComments = true;
+        }else {
+            allowComments = false;
+        }
+        post.title = req.body.title;
+        post.body = req.body.body;
+        post.status = req.body.status;
+        post.allowComments = allowComments;
+        post.image = `https://s3.amazonaws.com/online-dating-site/${req.body.upload}`;
+        post.date = new Date()
+
+        if (req.body.status === 'public') {
+            post.icon = 'fa fa-globe';
+        }
+        if (req.body.status === 'private') {
+            post.icon = 'fa fa-key';
+        }
+        if (req.body.status === 'friends') {
+            post.icon = 'fa fa-group';
+        }
+        post.save()
+        .then(() => {
+            res.redirect('/profile');
+        })
+    })
+})
+
+// add like for each post
+app.get('/likePost/:id',requireLogin,(req,res) => {
+    Post.findById({_id:req.params.id})
+    .then((post) => {
+        const newLike = {
+           likeUser: req.user._id,
+           date: new Date() 
+        }
+        post.likes.push(newLike)
+        post.save((err,post) => {
+            if (err) {
+                throw err
+            }
+            if (post) {
+                res.redirect(`/fullPost/${post._id}`);
+            }
+        })
+    })
+})
+app.get('/fullPost/:id',requireLogin,(req,res) => {
+    Post.findById({_id:req.params.id})
+    .populate('postUser')
+    .populate('likes.likeUser')
+    
+    .sort({date:'desc'})
+    .then((post) => {
+        res.render('post/fullPost',{
+            title: 'Full Post',
+            post:post
+        })
+    })
+})
+// submit form to leave comment
+app.post('/leaveComment/:id',requireLogin,(req,res) => {
+    Post.findById({_id:req.params.id})
+    .then((post) => {
+        const newComment = {
+            commentUser: req.user._id,
+            commentBody: req.body.commentBody,
+            date: new Date()
+        }
+        post.comments.push(newComment)
+        post.save((err,post) => {
+            if (err) {
+                throw err;
+            }
+            if (post) {
+                res.redirect(`/fullPost/${post._id}`);
             }
         })
     })

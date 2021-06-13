@@ -103,3 +103,16 @@ a:visited {
     border-radius: 30px;
     border: 2px solid rgb(162, 27, 27);
 }
+
+.post-icons {
+    margin-right: 10px;
+}
+
+.form-flex {
+    display: inline-flex;
+}
+
+.profile-info-position {
+    position: absolute;
+    margin-left: 40%;
+}
