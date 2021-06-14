@@ -80,7 +80,7 @@ app.set('view engine','handlebars');
 // get the route homepage, req=incoming request from client, res=response back to client
 app.get('/',ensureGuest,(req,res) => {
     res.render('home',{
-        title: 'Home'
+        title: 'Welcome'
     });
 });
 
